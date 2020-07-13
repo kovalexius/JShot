@@ -12,8 +12,8 @@ if(NOT TESTONLY)
 						EXCLUDE_FROM_ALL)
 endif()
 		
-include_directories(
-					 ${DIRECTX_INCLUDE_DIR})
+include_directories( ${DIRECTX_INCLUDE_DIR}
+					 ${CMAKE_CURRENT_SOURCE_DIR}/common/)
 
 if(TESTONLY)
 	add_executable(testJShot

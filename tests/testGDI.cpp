@@ -134,12 +134,13 @@ void testPerfomanceDDraw(const CRectangle& _region)
 	std::cout << "testPerfomanceDDraw" << std::endl;
 	CDDrawScreenShooter ddScreenShooter;
 
+	std::vector<char> buffer;
 	uint64_t numIterations = 0;
 	auto startTime = std::chrono::system_clock::now();
 
 	for (numIterations = 0; _kbhit() == 0; numIterations++)
 	{
-		ddScreenShooter.GetScreenShot(_region);
+		ddScreenShooter.GetScreenShot(_region, buffer);
 	}
 	auto endTime = std::chrono::system_clock::now();
 	getch();

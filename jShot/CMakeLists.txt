@@ -19,8 +19,6 @@ if(DXSUPPORT)
 			./src/DXScreenShooter.h
 			./src/DDrawScreenShooter.cpp
 			./src/DDrawScreenShooter.h
-			./src/types/geometry_types.cpp
-			./src/types/geometry_types.h
 			./src/ddraw_decode_error.cpp
 			./src/ddraw_decode_error.h
 		)
@@ -28,10 +26,10 @@ else()
 	set(JSHOT_SOURCE
 			./src/GDIScreenShooter.cpp
 			./src/GDIScreenShooter.h
-			./src/types/geometry_types.cpp
-			./src/types/geometry_types.h
 		)
 endif()
+
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../common/)
 
 if(DXSUPPORT)
 	include_directories(
