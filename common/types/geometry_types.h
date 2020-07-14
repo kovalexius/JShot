@@ -49,7 +49,10 @@ public:
 
 	bool operator == (const CRectangle& _other)
 	{
-		return (m_leftBottomCorner == _other.m_leftBottomCorner) && (m_size == _other.m_size);
+		return (m_leftBottomCorner == _other.m_leftBottomCorner) && 
+				(m_size == _other.m_size) && 
+				(m_bytesPerPixel == _other.m_bytesPerPixel) &&
+				(m_bitsPerPixel == _other.m_bitsPerPixel);
 	}
 
 	bool operator != (const CRectangle& _other)
