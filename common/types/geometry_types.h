@@ -1,6 +1,8 @@
 #ifndef __GEOMETRY_TYPES__H
 #define __GEOMETRY_TYPES__H
 
+#include <sstream>
+#include <iostream>
 
 struct Vector2
 {
@@ -14,9 +16,18 @@ public:
 		return (m_x == _other.m_x) && (m_y == _other.m_y);
 	}
 
+	friend std::ostream& operator << (std::ostream& _os, const Vector2& _obj);
+
+	std::ostream& operator << (std::ostream& _os) const
+	{
+		_os << "m_x: " << m_x << " m_y: " << m_y << std::endl;
+		return _os;
+	}
+
 	int m_x;
 	int m_y;
 };
+
 
 struct CRectangle
 {
@@ -30,10 +41,10 @@ public:
 	explicit CRectangle(const Vector2& _leftBottomCorner, 
 						const Vector2& _size,
 						short _bytesPerPixel) :
-																			m_leftBottomCorner(_leftBottomCorner),
-																			m_size(_size),
-																			m_bytesPerPixel(_bytesPerPixel),
-																			m_bitsPerPixel(_bytesPerPixel*8)
+											m_leftBottomCorner(_leftBottomCorner),
+											m_size(_size),
+											m_bytesPerPixel(_bytesPerPixel),
+											m_bitsPerPixel(_bytesPerPixel*8)
 	{}
 
 	bool operator == (const CRectangle& _other)
@@ -60,9 +71,21 @@ public:
 		return m_bytesPerPixel;
 	}
 
+	void setBytesPerPixel(short _bytesPerPixel)
+	{
+		m_bytesPerPixel = _bytesPerPixel;
+		m_bitsPerPixel = _bytesPerPixel * 8;
+	}
+
 	short getBitsPerPixel() const
 	{
 		return m_bitsPerPixel;
+	}
+
+	void setBitsPerPixel(short _bitsPerPixel)
+	{
+		m_bitsPerPixel = _bitsPerPixel;
+		m_bytesPerPixel = _bitsPerPixel / 8;
 	}
 
 	Vector2& getLeftBottom()
@@ -75,14 +98,25 @@ public:
 		return m_leftBottomCorner;
 	}
 
+	friend std::ostream& operator << (std::ostream& _os, const CRectangle& _obj);
+
+	std::ostream& operator << (std::ostream& _os) const
+	{
+		_os << "m_leftBottomCorner: " << m_leftBottomCorner << std::endl <<
+			"m_size: " << m_size << std::endl <<
+			"m_bytesPerPixel: " << m_bytesPerPixel << std::endl <<
+			"m_bitsPerPixel: " << m_bitsPerPixel << std::endl;
+
+		return _os;
+	}
+
 private:
 	Vector2 m_leftBottomCorner;
 	Vector2 m_size;
 
-	// The number of bytes-per-pixel.
 	short	m_bytesPerPixel;
-	// The number of bits-per-pixel.
 	short	m_bitsPerPixel;
 };
+
 
 #endif
