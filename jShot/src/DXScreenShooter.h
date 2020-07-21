@@ -12,7 +12,8 @@ class CDxScreenShooter
 {
 public:
 	CDxScreenShooter();
-	bool GetScreenShot(const CRectangle& _region, std::vector<char>& _outBuffer);
+	bool GetScreenShot(CRectangle& _region, std::vector<char>& _outBuffer);
+	CRectangle& GetRectangle();
 private:
 	std::shared_ptr<CDxScreenShooterImpl> m_shooter;
 };

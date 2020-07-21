@@ -26,13 +26,10 @@ public:
 	}
 
 	// ScreenShot 
-	bool CDxScreenShooterImpl::GetScreenShot(const CRectangle& _region, std::vector<char>& _outBuffer)
+	bool CDxScreenShooterImpl::GetScreenShot(CRectangle& _region, std::vector<char>& _outBuffer)
 	{
-		if (m_region != _region)
-		{
-			m_region = _region;
-			initSurface();			// Утечка?
-		}
+		// Точно не надо всё переинициализировать?
+		_region = GetRectangle();
 
 		// read the front buffer into the image surface 
 		if (D3D_OK != m_pd3dDevice->GetFrontBufferData(0, m_surf))
@@ -67,6 +64,21 @@ public:
 
 		// return status of save operation to caller 
 		return true;
+	}
+
+	CRectangle& GetRectangle()
+	{
+		// this will be the dimensions of the front buffer
+		if (D3D_OK != m_pd3dDevice->GetDisplayMode(NULL, &m_displaymode))
+		{
+			return m_region;
+		}
+
+		m_region.getSize().m_x = m_displaymode.Width;
+		m_region.getSize().m_y = m_displaymode.Height;
+		// Нужно еще задать глубину пикселя в байтах или битах
+
+		return m_region;
 	}
 
 private:
@@ -158,7 +170,12 @@ CDxScreenShooter::CDxScreenShooter()
 	m_shooter = std::make_shared<CDxScreenShooterImpl>();
 }
 
-bool CDxScreenShooter::GetScreenShot(const CRectangle& _region, std::vector<char>& _outBuffer)
+bool CDxScreenShooter::GetScreenShot(CRectangle& _region, std::vector<char>& _outBuffer)
 {
 	return m_shooter->GetScreenShot(_region, _outBuffer);
+}
+
+CRectangle& CDxScreenShooter::GetRectangle()
+{
+	return m_shooter->GetRectangle();
 }
