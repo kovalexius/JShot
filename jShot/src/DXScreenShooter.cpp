@@ -71,6 +71,7 @@ public:
 		// this will be the dimensions of the front buffer
 		if (D3D_OK != m_pd3dDevice->GetDisplayMode(NULL, &m_displaymode))
 		{
+			std::cout << "failed GetDisplayMode" << std::endl;
 			return m_region;
 		}
 
@@ -112,7 +113,10 @@ private:
 		// сначала проицициализируем сам DirectX 9
 		IDirect3D9 * pD3D = Direct3DCreate9(D3D_SDK_VERSION);
 		if (pD3D == NULL)
+		{
+			std::cout << "failed Direct3DCreate9" << std::endl;
 			return;
+		}
 
 		if (D3D_OK != pD3D->CreateDevice(D3DADAPTER_DEFAULT,
 			D3DDEVTYPE::D3DDEVTYPE_HAL,
@@ -125,6 +129,7 @@ private:
 			&d3dpp,
 			&m_pd3dDevice))
 		{
+			std::cout << "failed CreateDevice" << std::endl;
 			return;
 		}
 
@@ -133,6 +138,7 @@ private:
 		// this will be the dimensions of the front buffer
 		if (D3D_OK != m_pd3dDevice->GetDisplayMode(NULL, &m_displaymode))
 		{
+			std::cout << "failed GetDisplayMode" << std::endl;
 			return;
 		}
 
@@ -148,6 +154,7 @@ private:
 			&m_surf,
 			NULL))
 		{
+			std::cout << "failed CreateOffscreenPlainSurface" << std::endl;
 			return;
 		}
 
